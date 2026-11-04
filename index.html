@@ -1,0 +1,555 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy 19th Birthday, Li! ❤️</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: #fff1eb;
+    color: #913b45;
+    font-family: 'Trebuchet MS', sans-serif;
+    text-align: center;
+}
+
+.screen {
+    display: none;
+    min-height: 100vh;
+    padding: 25px 15px 150px;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.screen.active {
+    display: flex;
+}
+
+.card {
+    width: min(480px, 95%);
+    background: #fffaf6;
+    padding: 28px 20px;
+    border: 2px solid #f1c4c0;
+    border-radius: 25px;
+    box-shadow: 0 8px 25px #b96b6b20;
+}
+
+h1, h2 {
+    color: #b73549;
+}
+
+p {
+    line-height: 1.6;
+}
+
+button {
+    border: none;
+    border-radius: 25px;
+    padding: 14px 24px;
+    background: #b73549;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 12px;
+    font-size: 15px;
+}
+
+button:hover {
+    opacity: .85;
+    transform: scale(1.03);
+}
+
+/* MUSIC PLAYER */
+#musicPlayer {
+    position: fixed;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: min(320px, 94%);
+    background: #fffaf6;
+    border: 2px solid #f1c4c0;
+    border-radius: 18px;
+    padding: 10px;
+    z-index: 100;
+    box-shadow: 0 5px 20px #b96b6b35;
+}
+
+#player {
+    width: 100%;
+    min-height: 90px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#musicButton {
+    margin: 5px 0 0;
+    padding: 10px 20px;
+}
+
+/* BUNNY */
+.stage {
+    height: 270px;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    margin: 10px auto;
+    overflow: hidden;
+}
+
+.bunny {
+    position: relative;
+    width: 130px;
+    height: 180px;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.ear {
+    position: absolute;
+    top: 0;
+    width: 35px;
+    height: 95px;
+    background: white;
+    border: 2px solid #e8b9b9;
+    border-radius: 50%;
+}
+
+.ear.left {
+    left: 23px;
+    transform: rotate(-12deg);
+}
+
+.ear.right {
+    right: 23px;
+    transform: rotate(12deg);
+}
+
+.face {
+    position: absolute;
+    top: 65px;
+    left: 8px;
+    width: 114px;
+    height: 105px;
+    background: white;
+    border: 2px solid #e8b9b9;
+    border-radius: 48%;
+}
+
+.eye {
+    position: absolute;
+    top: 42px;
+    width: 7px;
+    height: 9px;
+    background: #493a39;
+    border-radius: 50%;
+}
+
+.eye.left { left: 32px; }
+.eye.right { right: 32px; }
+
+.nose {
+    position: absolute;
+    top: 58px;
+    left: 53px;
+    width: 7px;
+    height: 6px;
+    background: #d88b91;
+    border-radius: 50%;
+}
+
+.cheek {
+    position: absolute;
+    top: 61px;
+    width: 15px;
+    height: 8px;
+    background: #f5c6c6;
+    border-radius: 50%;
+}
+
+.cheek.left { left: 17px; }
+.cheek.right { right: 17px; }
+
+.bow {
+    position: absolute;
+    top: 65px;
+    right: 0;
+    color: #c43b50;
+    font-size: 27px;
+    z-index: 2;
+}
+
+.arm {
+    position: absolute;
+    width: 38px;
+    height: 12px;
+    background: white;
+    border: 2px solid #e8b9b9;
+    border-radius: 20px;
+    top: 120px;
+    right: -17px;
+    transform-origin: left center;
+    animation: wave .7s ease-in-out infinite alternate;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+}
+
+@keyframes wave {
+    from { transform: rotate(-20deg); }
+    to { transform: rotate(35deg); }
+}
+
+/* FLOATING HEARTS */
+.float-heart {
+    position: absolute;
+    font-size: 25px;
+    animation: floatUp 4s linear infinite;
+    opacity: 0;
+}
+
+.h1 { left: 12%; animation-delay: 0s; }
+.h2 { left: 75%; animation-delay: 1s; }
+.h3 { left: 28%; animation-delay: 2s; }
+.h4 { left: 85%; animation-delay: 2.5s; }
+.h5 { left: 55%; animation-delay: 1.5s; }
+
+@keyframes floatUp {
+    0% { bottom: 0; opacity: 0; }
+    20% { opacity: 1; }
+    100% { bottom: 100%; opacity: 0; }
+}
+
+/* GIFT */
+.gift {
+    font-size: 85px;
+    margin-top: 10px;
+    animation: giftPop 1s ease-in-out infinite alternate;
+}
+
+@keyframes giftPop {
+    from { transform: scale(1); }
+    to { transform: scale(1.13) rotate(5deg); }
+}
+
+.gift-message {
+    animation: fadeIn 2s ease forwards;
+    opacity: 0;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* LETTER */
+#letter {
+    text-align: left;
+    white-space: pre-line;
+    line-height: 1.8;
+    background: #fffaf6;
+    border: 2px solid #f1c4c0;
+    border-radius: 20px;
+    padding: 23px;
+    width: min(650px, 95%);
+    margin: auto;
+    box-shadow: 0 8px 25px #b96b6b20;
+}
+
+#letter h2 {
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<!-- MUSIC PLAYER: STAYS VISIBLE ON EVERY SCREEN -->
+<div id="musicPlayer">
+    <div style="font-weight:bold;font-size:14px;margin-bottom:5px;">
+        ♫ Mundo — IV OF SPADES ❤️
+    </div>
+
+    <div id="player"></div>
+
+    <button id="musicButton" onclick="toggleMusic()">
+        ♫ Play Music
+    </button>
+
+    <div style="font-size:11px;">
+        Play your birthday soundtrack 🎀
+    </div>
+</div>
+
+<!-- WELCOME -->
+<section id="welcome" class="screen active">
+    <div class="card">
+        <div style="font-size:35px;">❤️ 🎀 ❤️</div>
+
+        <h1>Something Special for Li!</h1>
+
+        <p>I made a little birthday surprise just for you.</p>
+
+        <div style="font-size:75px;">🐰</div>
+
+        <p>Are you ready? Hehe!</p>
+
+        <button onclick="startAnimation()">
+            OPEN YOUR SURPRISE ❤️
+        </button>
+    </div>
+</section>
+
+<!-- ANIMATION -->
+<section id="animation" class="screen">
+    <div class="card">
+
+        <h1 id="animationTitle">Hiii, Li!! 🐰</h1>
+
+        <p id="animationText">
+            Someone has a little surprise for you...
+        </p>
+
+        <div class="stage">
+
+            <span class="float-heart h1">❤️</span>
+            <span class="float-heart h2">💗</span>
+            <span class="float-heart h3">💕</span>
+            <span class="float-heart h4">❤️</span>
+            <span class="float-heart h5">💖</span>
+
+            <div class="bunny">
+                <div class="ear left"></div>
+                <div class="ear right"></div>
+
+                <div class="face">
+                    <div class="eye left"></div>
+                    <div class="eye right"></div>
+                    <div class="nose"></div>
+                    <div class="cheek left"></div>
+                    <div class="cheek right"></div>
+                </div>
+
+                <div class="bow">🎀</div>
+                <div class="arm"></div>
+            </div>
+        </div>
+
+        <div class="gift" id="gift" style="display:none;">
+            🎁
+        </div>
+
+        <h2 class="gift-message" id="giftText" style="display:none;">
+            HAPPY 19TH BIRTHDAY, LI!!
+        </h2>
+
+        <p id="extraText"></p>
+
+        <button
+            id="letterButton"
+            style="display:none;"
+            onclick="openLetter()">
+            READ YOUR LETTER 💌
+        </button>
+
+    </div>
+</section>
+
+<!-- LETTER -->
+<section id="letterScreen" class="screen">
+
+    <div id="letter">
+
+        <h2>Happy 19th Birthday, Li!! ❤️🎀</h2>
+
+        <p>Hello Li!! Happy 19th Birthday!! ❤️🎀
+
+Finally, you're 19! I hope today reminds you how special and appreciated you are. I wish you nothing but happiness, good health, genuine people, and beautiful memories as you enter another chapter of your life.
+
+I know how much you love studying and how dedicated you are when it comes to school. I hope you never lose that passion and determination. Keep chasing your dreams, keep learning, and keep doing your best. I know there will be days when things get difficult, when school gets stressful, and when you feel tired, but always remember that progress takes time. Don't be too hard on yourself. You don't have to figure everything out all at once. Just keep moving forward, one step at a time. I hope you achieve all the things you've been working so hard for.
+
+And please, Li, HAHAHA, I know sometimes you drink energy drinks just to keep yourself awake when studying, especially when you have a lot to finish. But please don't forget to drink water too! Don't push yourself too hard just to get everything done. Take breaks when you need them, get enough sleep, and remember that your health is more important than any deadline or school requirement. You can always continue studying tomorrow. Your dreams are important, but so is taking care of the person who's working hard to achieve them. ❤️
+
+Also, never forget how beautiful you are, inside and out. Don't let stressful days, bad experiences, or other people's opinions make you question your worth. You are beautiful, capable, and deserving of all the good things coming your way. I hope you continue to see the beauty in yourself just as much as other people can see it in you.
+
+As you turn 19, I hope life gives you more reasons to smile, more opportunities to grow, and more moments worth remembering. May you become stronger, wiser, and happier. I hope you never stop believing in yourself and never settle for less than what you deserve.
+
+Enjoy your day, Li! Eat your favorite food, smile a little more, and don't think too much about school today. You deserve a break too! HAHAHA.
+
+Once again, HAPPY 19TH BIRTHDAY, LI!! ❤️🐰
+
+Stay happy, stay beautiful, and please drink your water!!
+
+Here's to more achievements, unforgettable memories, and wonderful chapters ahead. 🎂</p>
+
+        <h2 style="text-align:center;">❤️🐰🎂</h2>
+
+        <p style="text-align:center;">
+            Made with love, just for your special day.
+        </p>
+
+    </div>
+</section>
+
+<script>
+
+/* YOUTUBE PLAYER API */
+let player;
+let musicReady = false;
+let musicPlaying = false;
+
+function onYouTubeIframeAPIReady() {
+
+    player = new YT.Player('player', {
+        height: '90',
+        width: '280',
+
+        videoId: 'omFa4Yk9Fmg',
+
+        playerVars: {
+            playsinline: 1,
+            controls: 1,
+            rel: 0
+        },
+
+        events: {
+            onReady: function() {
+                musicReady = true;
+                document.getElementById('musicButton').innerText =
+                    '♫ Play Music';
+            },
+
+            onStateChange: function(event) {
+                if (event.data === YT.PlayerState.PLAYING) {
+                    musicPlaying = true;
+                    document.getElementById('musicButton').innerText =
+                        '♫ Pause Music';
+                }
+
+                if (event.data === YT.PlayerState.PAUSED ||
+                    event.data === YT.PlayerState.ENDED) {
+                    musicPlaying = false;
+                    document.getElementById('musicButton').innerText =
+                        '♫ Play Music';
+                }
+            },
+
+            onError: function(event) {
+                document.getElementById('musicButton').innerText =
+                    'Music unavailable';
+                console.log('YouTube error:', event.data);
+            }
+        }
+    });
+}
+
+function toggleMusic() {
+
+    if (!musicReady) {
+        alert('Music is still loading. Please try again!');
+        return;
+    }
+
+    if (musicPlaying) {
+        player.pauseVideo();
+    } else {
+        player.playVideo();
+    }
+}
+
+/* LOAD YOUTUBE API */
+let youtubeScript = document.createElement('script');
+youtubeScript.src = 'https://www.youtube.com/iframe_api';
+document.head.appendChild(youtubeScript);
+
+
+/* SCREEN CONTROL */
+function showScreen(id) {
+
+    document.querySelectorAll('.screen').forEach(screen => {
+        screen.classList.remove('active');
+    });
+
+    document.getElementById(id).classList.add('active');
+
+    window.scrollTo(0, 0);
+}
+
+
+/* BIRTHDAY ANIMATION */
+let animationTimers = [];
+
+function startAnimation() {
+
+    animationTimers.forEach(timer => clearTimeout(timer));
+    animationTimers = [];
+
+    // Start music after the user's click, if the player is ready.
+    if (musicReady) {
+        player.playVideo();
+    }
+
+    showScreen('animation');
+
+    const title = document.getElementById('animationTitle');
+    const message = document.getElementById('animationText');
+    const gift = document.getElementById('gift');
+    const giftText = document.getElementById('giftText');
+    const extra = document.getElementById('extraText');
+    const button = document.getElementById('letterButton');
+
+    gift.style.display = 'none';
+    giftText.style.display = 'none';
+    button.style.display = 'none';
+
+    title.textContent = 'Hiii, Li!! 🐰';
+    message.textContent = 'Someone has a little surprise for you...';
+    extra.textContent = '';
+
+    animationTimers.push(setTimeout(() => {
+        message.textContent =
+            'This little bunny came to wish you something special! ❤️';
+    }, 2500));
+
+    animationTimers.push(setTimeout(() => {
+        message.textContent =
+            'Sending you lots and lots of love... 💗';
+    }, 5000));
+
+    animationTimers.push(setTimeout(() => {
+        gift.style.display = 'block';
+        message.textContent =
+            'A little present, just for you! 🎀';
+    }, 7500));
+
+    animationTimers.push(setTimeout(() => {
+        giftText.style.display = 'block';
+        giftText.textContent =
+            'HAPPY 19TH BIRTHDAY, LI!!';
+
+        extra.textContent =
+            'May your day be as lovely as you are. ❤️🐰';
+    }, 9500));
+
+    animationTimers.push(setTimeout(() => {
+        button.style.display = 'inline-block';
+    }, 12000));
+}
+
+
+/* OPEN BIRTHDAY LETTER */
+function openLetter() {
+    showScreen('letterScreen');
+}
+
+</script>
+
+</body>
+</html>
